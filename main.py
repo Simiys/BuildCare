@@ -533,10 +533,10 @@ async def handle_order_selection(message: types.Message, state: FSMContext):
         )
     else:
         if to_order in order:
-            print(str(data) + "\n 463 \n")
+            
             del order[to_order]
             await state.update_data(order=order)
-            print(str(data) + "\n 466 \n")
+            
 
             order_list = "\n".join([f"{item}: {quantity}" for item, quantity in order.items()])
             await message.answer(
@@ -640,7 +640,7 @@ async def handle_fix_photo(message: types.Message, state: FSMContext, bot:Bot):
     await state.update_data(repair=repair)
     await state.set_state(CleaningFSM.toRepair)
     await message.answer(
-        "Пожалуйста, выбирете еще поломки, если таковые имеються",
+        "Пожалуйста, выберете еще поломки, если таковые имеются",
         reply_markup=fixes_keyboard(),
     )
               
