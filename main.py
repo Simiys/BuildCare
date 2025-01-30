@@ -70,7 +70,7 @@ dp = Dispatcher()
 async def cmd_start(message: types.Message):
     if not await db_manager.get_user_by_telegram_id(message.from_user.id):
         await message.answer(
-            "Для работы с ботом необходим ваш номер телефона, пожалуйста, поделитесь номером телефона с ботом", 
+            "Поделиться номером телефона", 
             reply_markup=phone_request_keyboard
         )
     else:
@@ -109,10 +109,10 @@ async def choose_building_handler(message: types.Message, state: FSMContext):
     await state.update_data(chosen_building=chosen_building)
     
     if chosen_building == "Пятницкая, 7A":
-        await message.answer("📸 Отправьте фотографию коридора 1 этажа. При необходимости нажмите Пропустить.", reply_markup=skip_keyboard())
+        await message.answer("📸 Отправьте фотографию коридора 1 этажа.", reply_markup=None)
         await state.set_state(CleaningFSM.floor_1_corridor)
     elif chosen_building == "Свободы, 95к2":
-        await message.answer("📸 Отправьте фотографию комнаты №1. При необходимости нажмите Пропустить.", reply_markup=skip_keyboard())
+        await message.answer("📸 Отправьте фотографию комнаты №1.", reply_markup=None)
         await state.set_state(CleaningFSM.room_1)
 
 #ФОТОГРАФИИ
@@ -122,9 +122,7 @@ async def location_1_f1c(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
 
-    if message.content_type == 'text' and message.text == "Пропустить":
-        photos.append('skip')
-    elif message.content_type == 'photo':
+    if message.content_type == 'photo':
         photo = message.photo[-1]
         file_path = f"photos/{message.from_user.id}_location_1_{int(time.time())}.jpg"
         
@@ -137,14 +135,14 @@ async def location_1_f1c(message: types.Message, state: FSMContext, bot: Bot):
             await message.answer("Произошла ошибка при загрузке фотографии. Попробуйте ещё раз.")
             return
     else:
-        await message.answer("Пожалуйста, отправьте фотографию или нажмите 'Пропустить'.")
+        await message.answer("Пожалуйста, отправьте одну фотографию.")
         return
 
     await state.update_data(photos=photos)
     await state.set_state(CleaningFSM.floor_1_restroom)
     await message.answer(
-        "📸 Отправьте фотографию санузла 1 этажа. При необходимости нажмите Пропустить.",
-        reply_markup=skip_keyboard(),
+        "📸 Отправьте фотографию санузла 1 этажа.",
+        reply_markup=None,
     )
 
 @dp.message(CleaningFSM.floor_1_restroom)
@@ -152,9 +150,7 @@ async def location_1_f1r(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
 
-    if message.content_type == 'text' and message.text == "Пропустить":
-        photos.append('skip')
-    elif message.content_type == 'photo':
+    if message.content_type == 'photo':
         photo = message.photo[-1]
         file_path = f"photos/{message.from_user.id}_location_1_{int(time.time())}.jpg"
         
@@ -167,14 +163,14 @@ async def location_1_f1r(message: types.Message, state: FSMContext, bot: Bot):
             await message.answer("Произошла ошибка при загрузке фотографии. Попробуйте ещё раз.")
             return
     else:
-        await message.answer("Пожалуйста, отправьте фотографию или нажмите 'Пропустить'.")
+        await message.answer("Пожалуйста, отправьте одну фотографию.")
         return
 
     await state.update_data(photos=photos)
     await state.set_state(CleaningFSM.floor_2_corridor)
     await message.answer(
-        "📸 Отправьте фотографию коридора 2 этажа. При необходимости нажмите Пропустить.",
-        reply_markup=skip_keyboard(),
+        "📸 Отправьте фотографию коридора 2 этажа.",
+        reply_markup=None,
     )
 
 @dp.message(CleaningFSM.floor_2_corridor)
@@ -182,9 +178,7 @@ async def location_1_f2c(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
 
-    if message.content_type == 'text' and message.text == "Пропустить":
-        photos.append('skip')
-    elif message.content_type == 'photo':
+    if message.content_type == 'photo':
         photo = message.photo[-1]
         file_path = f"photos/{message.from_user.id}_location_1_{int(time.time())}.jpg"
         
@@ -197,14 +191,14 @@ async def location_1_f2c(message: types.Message, state: FSMContext, bot: Bot):
             await message.answer("Произошла ошибка при загрузке фотографии. Попробуйте ещё раз.")
             return
     else:
-        await message.answer("Пожалуйста, отправьте фотографию или нажмите 'Пропустить'.")
+        await message.answer("Пожалуйста, отправьте одну фотографию.")
         return
 
     await state.update_data(photos=photos)
     await state.set_state(CleaningFSM.floor_2_restroom)
     await message.answer(
-        "📸 Отправьте фотографию санузла 2 этажа. При необходимости нажмите Пропустить.",
-        reply_markup=skip_keyboard(),
+        "📸 Отправьте фотографию санузла 2 этажа.",
+        reply_markup=None,
     )
 
 @dp.message(CleaningFSM.floor_2_restroom)
@@ -212,9 +206,7 @@ async def location_1_f2r(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
 
-    if message.content_type == 'text' and message.text == "Пропустить":
-        photos.append('skip')
-    elif message.content_type == 'photo':
+    if message.content_type == 'photo':
         photo = message.photo[-1]
         file_path = f"photos/{message.from_user.id}_location_1_{int(time.time())}.jpg"
         
@@ -227,14 +219,14 @@ async def location_1_f2r(message: types.Message, state: FSMContext, bot: Bot):
             await message.answer("Произошла ошибка при загрузке фотографии. Попробуйте ещё раз.")
             return
     else:
-        await message.answer("Пожалуйста, отправьте фотографию или нажмите 'Пропустить'.")
+        await message.answer("Пожалуйста, отправьте одну фотографию.")
         return
 
     await state.update_data(photos=photos)
     await state.set_state(CleaningFSM.stairsl1)
     await message.answer(
-        "📸 Отправьте фотографию лестницы. При необходимости нажмите Пропустить.",
-        reply_markup=skip_keyboard(),
+        "📸 Отправьте фотографию лестницы.",
+        reply_markup=None,
     )
 
 @dp.message(CleaningFSM.stairsl1)
@@ -243,9 +235,7 @@ async def location_1_st(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
 
-    if message.content_type == 'text' and message.text == "Пропустить":
-        photos.append('skip')
-    elif message.content_type == 'photo':
+    if message.content_type == 'photo':
         photo = message.photo[-1]
         file_path = f"photos/{message.from_user.id}_location_1_{int(time.time())}.jpg"
         
@@ -258,7 +248,7 @@ async def location_1_st(message: types.Message, state: FSMContext, bot: Bot):
             await message.answer("Произошла ошибка при загрузке фотографии. Попробуйте ещё раз.")
             return
     else:
-        await message.answer("Пожалуйста, отправьте фотографию или нажмите 'Пропустить'.")
+        await message.answer("Пожалуйста, отправьте одну фотографию.")
         return
 
     await state.update_data(photos=photos)
@@ -276,9 +266,7 @@ async def location_2_r1(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
 
-    if message.content_type == 'text' and message.text == "Пропустить":
-        photos.append('skip')
-    elif message.content_type == 'photo':
+    if message.content_type == 'photo':
         photo = message.photo[-1]
         file_path = f"photos/{message.from_user.id}_location_2_{int(time.time())}.jpg"
         
@@ -291,14 +279,14 @@ async def location_2_r1(message: types.Message, state: FSMContext, bot: Bot):
             await message.answer("Произошла ошибка при загрузке фотографии. Попробуйте ещё раз.")
             return
     else:
-        await message.answer("Пожалуйста, отправьте фотографию или нажмите 'Пропустить'.")
+        await message.answer("Пожалуйста, отправьте однк фотографию.")
         return
 
     await state.update_data(photos=photos)
     await state.set_state(CleaningFSM.room_6)
     await message.answer(
-        "📸 Отправьте фотографию комнаты №6. При необходимости нажмите Пропустить.",
-        reply_markup=skip_keyboard(),
+        "📸 Отправьте фотографию комнаты №6.",
+        reply_markup=None,
     )
 
 @dp.message(CleaningFSM.room_6)
@@ -306,9 +294,7 @@ async def location_2_r6(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
 
-    if message.content_type == 'text' and message.text == "Пропустить":
-        photos.append('skip')
-    elif message.content_type == 'photo':
+    if message.content_type == 'photo':
         photo = message.photo[-1]
         file_path = f"photos/{message.from_user.id}_location_2_{int(time.time())}.jpg"
         
@@ -321,14 +307,14 @@ async def location_2_r6(message: types.Message, state: FSMContext, bot: Bot):
             await message.answer("Произошла ошибка при загрузке фотографии. Попробуйте ещё раз.")
             return
     else:
-        await message.answer("Пожалуйста, отправьте фотографию или нажмите 'Пропустить'.")
+        await message.answer("Пожалуйста, отправьте одну фотографию.")
         return
 
     await state.update_data(photos=photos)
     await state.set_state(CleaningFSM.restroom)
     await message.answer(
-        "📸 Отправьте фотографию санузла. При необходимости нажмите Пропустить.",
-        reply_markup=skip_keyboard(),
+        "📸 Отправьте фотографию санузла.",
+        reply_markup=None,
     )
 
 @dp.message(CleaningFSM.restroom)
@@ -336,9 +322,7 @@ async def location_2_rr(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
 
-    if message.content_type == 'text' and message.text == "Пропустить":
-        photos.append('skip')
-    elif message.content_type == 'photo':
+    if message.content_type == 'photo':
         photo = message.photo[-1]
         file_path = f"photos/{message.from_user.id}_location_2_{int(time.time())}.jpg"
         
@@ -351,14 +335,14 @@ async def location_2_rr(message: types.Message, state: FSMContext, bot: Bot):
             await message.answer("Произошла ошибка при загрузке фотографии. Попробуйте ещё раз.")
             return
     else:
-        await message.answer("Пожалуйста, отправьте фотографию или нажмите 'Пропустить'.")
+        await message.answer("Пожалуйста, отправьте одну фотографию.")
         return
 
     await state.update_data(photos=photos)
     await state.set_state(CleaningFSM.stairsl2)
     await message.answer(
-        "📸 Отправьте фотографию лестницы. При необходимости нажмите Пропустить.",
-        reply_markup=skip_keyboard(),
+        "📸 Отправьте фотографию лестницы.",
+        reply_markup=None,
     )
 
 @dp.message(CleaningFSM.stairsl2)
@@ -366,9 +350,7 @@ async def location_2_st(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
 
-    if message.content_type == 'text' and message.text == "Пропустить":
-        photos.append('skip')
-    elif message.content_type == 'photo':
+    if message.content_type == 'photo':
         photo = message.photo[-1]
         file_path = f"photos/{message.from_user.id}_location_2_{int(time.time())}.jpg"
         
@@ -381,14 +363,14 @@ async def location_2_st(message: types.Message, state: FSMContext, bot: Bot):
             await message.answer("Произошла ошибка при загрузке фотографии. Попробуйте ещё раз.")
             return
     else:
-        await message.answer("Пожалуйста, отправьте фотографию или нажмите 'Пропустить'.")
+        await message.answer("Пожалуйста, отправьте одну фотографию.")
         return
 
     await state.update_data(photos=photos)
     await state.set_state(CleaningFSM.corridor)
     await message.answer(
-        "📸 Отправьте фотографию коридора. При необходимости нажмите Пропустить.",
-        reply_markup=skip_keyboard(),
+        "📸 Отправьте фотографию коридора.",
+        reply_markup=None,
     )
 
 @dp.message(CleaningFSM.corridor)
@@ -396,9 +378,7 @@ async def location_2_r1(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
 
-    if message.content_type == 'text' and message.text == "Пропустить":
-        photos.append('skip')
-    elif message.content_type == 'photo':
+    if message.content_type == 'photo':
         photo = message.photo[-1]
         file_path = f"photos/{message.from_user.id}_location_2_{int(time.time())}.jpg"
         
@@ -411,7 +391,7 @@ async def location_2_r1(message: types.Message, state: FSMContext, bot: Bot):
             await message.answer("Произошла ошибка при загрузке фотографии. Попробуйте ещё раз.")
             return
     else:
-        await message.answer("Пожалуйста, отправьте фотографию или нажмите 'Пропустить'.")
+        await message.answer("Пожалуйста, отправьте одну фотографию.")
         return
 
     await state.update_data(photos=photos)
