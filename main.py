@@ -441,26 +441,6 @@ async def additional_photo_handler(message: types.Message, state: FSMContext, bo
 
 
 #РАСХОДНИКИ
-# @dp.message(CleaningFSM.consumabels)
-# async def handle_consumabels_choose(message: types.Message, state: FSMContext):
-#     consumable = message.text
-#     data = await state.get_data()
-#     consumables = data.get("consumables", [])
-
-#     if consumable == 'Далее':
-#         await state.update_data(consumables = consumables)
-#         await state.set_state(CleaningFSM.order)
-#         await message.answer("Отлично. Теперь укажите какие расходники необходимо закупить", reply_markup=order_keyboard())
-#     else:
-#         if consumable in consumables:
-#             consumables.remove(consumable)
-#             await state.update_data(consumables = consumables)
-#             await message.answer("вы выбрали следующие расходники: " + format_strings_as_column(consumables) + "Желаете выбрать еще? Чтобы удалить расходник из выбранных нажмите на него еще раз", reply_markup=consumables_keyboard())
-#         else:
-#             consumables.append(consumable)
-#             await state.update_data(consumables = consumables)
-#             await message.answer("вы выбрали следующие расходники: " + format_strings_as_column(consumables) + "Желаете выбрать еще? Чтобы удалить расходник из выбранных нажмите на него еще раз", reply_markup=consumables_keyboard())          
-
 @dp.message(CleaningFSM.consumabels)
 async def handle_consumabels_selection(message: types.Message, state: FSMContext):
     consumable = message.text
@@ -475,7 +455,7 @@ async def handle_consumabels_selection(message: types.Message, state: FSMContext
         if consumable in consumables:
             del consumables[consumable]
             await state.update_data(consumables=consumables)
-            cons_list = "\n".join([f"{item}: {quantity}" for item, quantity in order.items()])
+            cons_list = "\n".join([f"{item}: {quantity}" for item, quantity in consumables.items()])
             await message.answer(
                 f"Вы выбрали следующие расходники:\n{cons_list}\n\nЖелаете выбрать еще? Чтобы удалить расходник из выбранных, нажмите на него еще раз.",
                 reply_markup=consumables_keyboard()
