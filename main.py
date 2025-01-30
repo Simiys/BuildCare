@@ -70,7 +70,7 @@ dp = Dispatcher()
 async def cmd_start(message: types.Message):
     if not await db_manager.get_user_by_telegram_id(message.from_user.id):
         await message.answer(
-            "Please share your phone number to continue.", 
+            "Для работы с ботом необходим ваш номер телефона, пожалуйста, поделитесь номером телефона с ботом", 
             reply_markup=phone_request_keyboard
         )
     else:
@@ -80,9 +80,9 @@ async def cmd_start(message: types.Message):
 async def handle_contact(message: types.Message):
     if message.contact.user_id == message.from_user.id:
         await db_manager.add_user(message.contact.phone_number, message.from_user.id)
-        await message.answer("Thank you! You are now verified.", reply_markup=start_cleaning_button())
+        await message.answer("Спасибо, теперь вы верефицированы. Добро пожаловать!", reply_markup=start_cleaning_button())
     else:
-        await message.answer("Please share your own phone number.")
+        await message.answer("Пожалуйста, поделитесь номером телефона с ботом.")
 
 @dp.message(F.text == "Начать уборку")
 async def handle_start_cleaning(message: types.Message, state: FSMContext):
