@@ -33,7 +33,7 @@ def building_keyboard():
 def skip_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text="Пропустить")]
+            [KeyboardButton(text="Пропустить➡️")]
         ],
         resize_keyboard=True,
         one_time_keyboard=True,
@@ -52,7 +52,7 @@ def order_keyboard():
             [KeyboardButton(text="Губки")],
             [KeyboardButton(text="Универсальное чистящее средство")],
             [KeyboardButton(text="Перчатки")],
-            [KeyboardButton(text="Далее")],
+            [KeyboardButton(text="Далее➡️")],
         ],
         resize_keyboard=True,
         one_time_keyboard=True,
@@ -69,7 +69,7 @@ def fixes_keyboard():
             [KeyboardButton(text="Перила")],
             [KeyboardButton(text="Двери")],
             [KeyboardButton(text="Сан. узел")],
-            [KeyboardButton(text="Далее")]
+            [KeyboardButton(text="Далее➡️")]
         ],
         resize_keyboard=True,
         one_time_keyboard=True,
@@ -82,7 +82,7 @@ def consumables_keyboard():
             [KeyboardButton(text="Диффузор")],
             [KeyboardButton(text="Мыло")],
             [KeyboardButton(text="Мусорный пакет")],
-            [KeyboardButton(text="Далее")],
+            [KeyboardButton(text="Далее➡️")],
         ],
         resize_keyboard=True,
         one_time_keyboard=True,

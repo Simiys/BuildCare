@@ -123,7 +123,12 @@ async def location_1_f1c(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
 
+    if message.media_group_id is not None:
+        await message.answer("Пожалуйста, отправьте только одну фотографию.")
+        return
+
     if message.content_type == 'photo':
+        print(str(message))
         photo = message.photo[-1]
         file_path = f"photos/{message.from_user.id}_location_1_{int(time.time())}.jpg"
         
@@ -150,6 +155,11 @@ async def location_1_f1c(message: types.Message, state: FSMContext, bot: Bot):
 async def location_1_f1r(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
+
+    
+    if message.media_group_id is not None:
+        await message.answer("Пожалуйста, отправьте только одну фотографию.")
+        return
 
     if message.content_type == 'photo':
         photo = message.photo[-1]
@@ -179,6 +189,11 @@ async def location_1_f2c(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
 
+    
+    if message.media_group_id is not None:
+        await message.answer("Пожалуйста, отправьте только одну фотографию.")
+        return
+
     if message.content_type == 'photo':
         photo = message.photo[-1]
         file_path = f"photos/{message.from_user.id}_location_1_{int(time.time())}.jpg"
@@ -206,6 +221,11 @@ async def location_1_f2c(message: types.Message, state: FSMContext, bot: Bot):
 async def location_1_f2r(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
+
+    
+    if message.media_group_id is not None:
+        await message.answer("Пожалуйста, отправьте только одну фотографию.")
+        return
 
     if message.content_type == 'photo':
         photo = message.photo[-1]
@@ -235,6 +255,11 @@ async def location_1_st(message: types.Message, state: FSMContext, bot: Bot):
     
     data = await state.get_data()
     photos = data.get("photos", [])
+
+    
+    if message.media_group_id is not None:
+        await message.answer("Пожалуйста, отправьте только одну фотографию.")
+        return
 
     if message.content_type == 'photo':
         photo = message.photo[-1]
@@ -266,6 +291,10 @@ async def location_1_st(message: types.Message, state: FSMContext, bot: Bot):
 async def location_2_r1(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
+    
+    if message.media_group_id is not None:
+        await message.answer("Пожалуйста, отправьте только одну фотографию.")
+        return
 
     if message.content_type == 'photo':
         photo = message.photo[-1]
@@ -295,6 +324,11 @@ async def location_2_r6(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
 
+    
+    if message.media_group_id is not None:
+        await message.answer("Пожалуйста, отправьте только одну фотографию.")
+        return
+
     if message.content_type == 'photo':
         photo = message.photo[-1]
         file_path = f"photos/{message.from_user.id}_location_2_{int(time.time())}.jpg"
@@ -322,6 +356,10 @@ async def location_2_r6(message: types.Message, state: FSMContext, bot: Bot):
 async def location_2_rr(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
+    
+    if message.media_group_id is not None:
+        await message.answer("Пожалуйста, отправьте только одну фотографию.")
+        return
 
     if message.content_type == 'photo':
         photo = message.photo[-1]
@@ -350,6 +388,10 @@ async def location_2_rr(message: types.Message, state: FSMContext, bot: Bot):
 async def location_2_st(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
+    
+    if message.media_group_id is not None:
+        await message.answer("Пожалуйста, отправьте только одну фотографию.")
+        return
 
     if message.content_type == 'photo':
         photo = message.photo[-1]
@@ -378,6 +420,10 @@ async def location_2_st(message: types.Message, state: FSMContext, bot: Bot):
 async def location_2_r1(message: types.Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     photos = data.get("photos", [])
+    
+    if message.media_group_id is not None:
+        await message.answer("Пожалуйста, отправьте только одну фотографию.")
+        return
 
     if message.content_type == 'photo':
         photo = message.photo[-1]
@@ -408,7 +454,11 @@ async def additional_photo_handler(message: types.Message, state: FSMContext, bo
     data = await state.get_data()
     add_photos = data.get("add_photos", [])
 
-    if message.content_type == 'text' and message.text == "Пропустить":
+    if message.media_group_id is not None:
+        await message.answer("Пожалуйста, отправьте только одну фотографию.")
+        return
+
+    if message.content_type == 'text' and message.text == "Пропустить➡️":
         add_photos.append('skip')
         await state.update_data(add_photos=add_photos)
         await state.set_state(CleaningFSM.consumabels)
@@ -447,7 +497,7 @@ async def handle_consumabels_selection(message: types.Message, state: FSMContext
     data = await state.get_data()
     consumables = data.get("consumables", {}) 
 
-    if consumable == 'Далее':
+    if consumable == 'Далее➡️':
         await state.update_data(consumables=consumables)
         await state.set_state(CleaningFSM.order)
         await message.answer("Отлично. Теперь укажите какие расходники необходимо закупить", reply_markup=order_keyboard())
@@ -490,7 +540,7 @@ async def handle_consumabels_amount(message: types.Message, state: FSMContext):
 
     c_list = "\n".join([f"{item}: {quantity}" for item, quantity in consumables.items()])
     await message.answer(
-        f"Вы выбрали следующие расходники:\n{c_list}\n\nКакие еще расходники необходимо закупить, если такие имеются?",
+        f"Вы выбрали следующие расходники:\n{c_list}\n\nКакие еще расходники вы использовали, если такие имеются?",
         reply_markup=consumables_keyboard()
     )
 
@@ -504,7 +554,7 @@ async def handle_order_selection(message: types.Message, state: FSMContext):
     data = await state.get_data()
     order = data.get("order", {}) 
 
-    if to_order == 'Далее':
+    if to_order == 'Далее➡️':
         await state.update_data(order=order)
         await state.set_state(CleaningFSM.toRepair)
         await message.answer(
@@ -567,7 +617,7 @@ async def handle_fixes_choose(message: types.Message, state: FSMContext):
     toRepair = message.text
     data = await state.get_data()
     repair = data.get("repair", {})
-    if toRepair == 'Далее':
+    if toRepair == 'Далее➡️':
         await state.update_data(repair=repair)
         await state.set_state(CleaningFSM.final)
         await message.answer(
@@ -656,7 +706,7 @@ async def handle_consumabels_choose(message: types.Message, state: FSMContext):
 
 
 
-    await message.answer("Спасибо что выбираете нас!", reply_markup=start_cleaning_button())
+    await message.answer("Спасибо большое за отличную работу! Уборка выполнена на высшем уровне. Ваш труд очень ценится!", reply_markup=start_cleaning_button())
     await state.clear() 
 
 
