@@ -463,7 +463,7 @@ async def additional_photo_handler(message: types.Message, state: FSMContext, bo
         await state.update_data(add_photos=add_photos)
         await state.set_state(CleaningFSM.consumabels)
         await message.answer(
-        "Спасибо, теперь укажите какие расходники вы использовали, если такие есть",
+        "“Сколько и какие расходники вы использовали при уборке?”",
         reply_markup=consumables_keyboard(),
     )
     elif message.content_type == 'photo':
